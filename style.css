@@ -1,0 +1,841 @@
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* কারখানা সিনারি ব্যাকগ্রাউন্ড */
+.factory-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('61J_jY09fdL._AC_SL1100_6a1de71b-903c-443c-8ca7-e34d03cb70bc.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+.factory-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.login-form {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+        
+        .contact-info {
+            text-align: right;
+        }
+        
+        .contact-info p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+        
+        nav {
+            background-color: var(--secondary);
+            padding: 10px 0;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs li {
+            margin-right: 5px;
+        }
+        
+        .nav-tabs a {
+            display: block;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-tabs a:hover, .nav-tabs a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #219955;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-buttons button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .print-btn {
+            margin-bottom: 15px;
+        }
+        
+        .salary-sheet {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .salary-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .salary-table {
+            margin-bottom: 30px;
+        }
+        
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+        }
+        
+        .signature-box {
+            width: 200px;
+            border-top: 1px solid #333;
+            text-align: center;
+            padding-top: 5px;
+        }
+        
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .attendance-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .attendance-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .present-btn {
+            background-color: #e8f5e8;
+            color: var(--success);
+            border: 2px solid #e8f5e8;
+        }
+        
+        .present-btn.active {
+            background-color: var(--success);
+            color: white;
+            border: 2px solid var(--success);
+        }
+        
+        .absent-btn {
+            background-color: #fde8e8;
+            color: var(--accent);
+            border: 2px solid #fde8e8;
+        }
+        
+        .absent-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+        
+        .leave-btn {
+            background-color: #fef5e8;
+            color: var(--warning);
+            border: 2px solid #fef5e8;
+        }
+        
+        .leave-btn.active {
+            background-color: var(--warning);
+            color: white;
+            border: 2px solid var(--warning);
+        }
+        
+        .production-input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .quick-attendance, .quick-production {
+            margin-bottom: 30px;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body, .tab-content {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .salary-sheet {
+                page-break-after: always;
+            }
+            
+            header, nav {
+                display: none !important;
+            }
+            
+            .salary-header h3 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .salary-header p {
+                margin: 5px 0;
+            }
+            
+            .stock-report-table {
+                page-break-inside: avoid;
+            }
+        }
+
+        .auto-product-list {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .auto-product-list h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .product-suggestion {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .product-suggestion:hover {
+            background-color: #dde1e6;
+        }
+        
+        .production-quantity {
+            width: 100px;
+        }
+
+        .bank-management {
+            margin-top: 30px;
+        }
+
+        .bank-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bank-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .bank-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .bank-balance {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .sale-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .bank-name-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }f
+        
+        .bank-name-edit input {
+            flex: 1;
+        }
+        
+        .bank-name-edit button {
+            padding: 8px 12px;
+        }
+        
+        .salary-rate-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .edit-worker-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .edit-worker-form.active {
+            display: block;
+        }
+        
+        .stock-report {
+            margin-top: 30px;
+        }
+        
+        .stock-report-table {
+            margin-top: 20px;
+        }
+
+        /* কাচামাল স্টক তাকিকা স্টাইল */
+        .stock-shelves {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .shelf {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .shelf h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .shelf-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .shelf-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stock-level {
+            font-weight: bold;
+        }
+        
+        .low-stock {
+            color: var(--accent);
+        }
+        
+        .medium-stock {
+            color: var(--warning);
+        }
+        
+        .high-stock {
+            color: var(--success);
+        }
+        
+        /* ব্যাংক স্টেটমেন্ট স্টাইল */
+        .bank-statement-section {
+            margin-top: 30px;
+        }
+        
+        .bank-statement-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .bank-statement-filters .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .bank-statement-table {
+            margin-top: 20px;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* উন্নত স্টক ব্যবস্থাপনা স্টাইল */
+        .stock-management {
+            margin-top: 30px;
+        }
+        
+        .stock-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stock-actions button {
+            padding: 10px 20px;
+        }
+        
+        .stock-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .stock-details h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .stock-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .stock-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stock-detail-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .stock-detail-value {
+            font-weight: bold;
+        }
+        
+        /* ব্যাংক স্টেটমেন্ট প্রিন্ট স্টাইল */
+        .statement-print-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+        }
+        
+        .statement-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .statement-summary-item {
+            text-align: center;
+        }
+        
+        .statement-summary-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .statement-summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* পণ্য ব্যবস্থাপনার জন্য অতিরিক্ত স্টাইল */
+        .bundle-weight-input {
+            width: 150px;
+        }
+
+        .bundle-list-container {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        /* লগইন মডেল স্টাইল */
+        .login-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-modal.hidden {
+            display: none;
+        }
+        
+        .login-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-form input {
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        /* অটো-সেভ স্ট্যাটাস বার */
+        .auto-save-status {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--success);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .auto-save-status.saving {
+            background-color: var(--warning);
+        }
+        
+        .auto-save-status.error {
+            background-color: var(--accent);
+        }
+        
+        /* লগইন ফেইল বার */
+        .login-fail {
+            color: var(--accent);
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* নগদ ব্যালেন্স কার্ড */
+        .cash-balance-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .cash-balance-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .cash-balance-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        /* লেনদেন ফর্মে অতিরিক্ত ফিল্ড */
+        .transaction-extra-fields {
+            display: none;
+        }
+
+        /* বেতন পরিশোধ বাটন */
+        .salary-payment-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .salary-payment-btn:hover {
+            background-color: #219955;
+        }
+
+        .advance-salary-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .advance-salary-btn:hover {
+            background-color: #e67e22;
+        }
+
+        /* ব্যাংক পেমেন্ট ফর্ম */
+        .bank-payment-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .payment-history {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        /* সাম্প্রতিক কার্যক্রমের জন্য বাটন স্টাইল */
+        .recent-activity-btn {
+            padding: 4px 8px;
+            font-size: 12px;
+            margin: 0 2px;
+        }

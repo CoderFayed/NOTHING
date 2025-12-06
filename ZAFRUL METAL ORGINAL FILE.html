@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zafrul Metal - কারখানা ব্যবস্থাপনা</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- লগইন মডেল -->
+<div class="login-modal" id="login-modal">
+    <!-- কারখানা ব্যাকগ্রাউন্ড -->
+    <div class="factory-background"></div>
+    <div class="factory-overlay"></div>
+    
+    <div class="login-form">
+        <h2>Zafrul Metal - লগইন</h2>
+        <div class="form-group">
+            <label for="password">পাসওয়ার্ড</label>
+            <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
+        </div>
+        <button class="btn-success" onclick="login()">লগইন</button>
+        <div class="login-fail" id="login-fail">ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।</div>
+    </div>
+</div>
+    <!-- অটো-সেভ স্ট্যাটাস বার -->
+    <div class="auto-save-status" id="auto-save-status">ডেটা সেভ করা হয়েছে</div>
+    
+    <header class="hidden">
+        <div class="container header-content">
+            <div class="logo">
+                <h1>Zafrul Metal</h1>
+            </div>
+            <div class="contact-info">
+                <p>রংপুর রোড, বগুড়া</p>
+                <p>ফোন: ০১৭১৩৭০৬৯৯৬</p>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="hidden">
+        <div class="container">
+            <ul class="nav-tabs">
+                <li><a href="#" class="tab-link active" data-tab="dashboard">ড্যাশবোর্ড</a></li>
+                <li><a href="#" class="tab-link" data-tab="workers">শ্রমিক ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="attendance">হাজিরা</a></li>
+                <li><a href="#" class="tab-link" data-tab="salary">বেতন ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="suppliers">সাপ্লায়ার</a></li>
+                <li><a href="#" class="tab-link" data-tab="raw-materials">কাচামাল স্টক</a></li>
+                <li><a href="#" class="tab-link" data-tab="production">উৎপাদন ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="products">পণ্য ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="customers">ক্রেতা ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="sales">পণ্য বিক্রয়</a></li>
+                <li><a href="#" class="tab-link" data-tab="bank-management">ব্যাংক ব্যবস্থাপনা</a></li>
+                <li><a href="#" class="tab-link" data-tab="transactions">লেনদেন</a></li>
+                <li><a href="#" class="tab-link" data-tab="reports">রিপোর্ট</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container hidden" id="main-container">
+        <!-- ড্যাশবোর্ড ট্যাব -->
+        <div id="dashboard" class="tab-content active">
+            <h2>ড্যাশবোর্ড</h2>
+            
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>মোট শ্রমিক</h3>
+                    <div class="value" id="total-workers">0</div>
+                </div>
+                <div class="card">
+                    <h3>বর্তমান মাসের বেতন</h3>
+                    <div class="value" id="current-month-salary">৳ 0</div>
+                </div>
+                <div class="card">
+                    <h3>মোট সাপ্লায়ার</h3>
+                    <div class="value" id="total-suppliers">0</div>
+                </div>
+                <div class="card">
+                    <h3>মোট ক্রেতা</h3>
+                    <div class="value" id="total-customers">0</div>
+                </div>
+                <div class="card">
+                    <h3>কাচামাল স্টক (কেজি)</h3>
+                    <div class="value" id="total-raw-material">0</div>
+                </div>
+                <div class="card">
+                    <h3>উৎপাদিত পণ্য স্টক (বান্ডিল)</h3>
+                    <div class="value" id="total-product-stock">0</div>
+                </div>
+                <div class="card">
+                    <h3>মোট বিক্রয়</h3>
+                    <div class="value" id="total-sales">৳ 0</div>
+                </div>
+                <div class="card">
+                    <h3>মোট বকেয়া</h3>
+                    <div class="value" id="total-due">৳ 0</div>
+                </div>
+                <div class="card">
+                    <h3>নগদ ব্যালেন্স</h3>
+                    <div class="value" id="cash-balance">৳ 0</div>
+                </div>
+                <div class="card">
+                    <h3>ব্যাংক ব্যালেন্স</h3>
+                    <div class="value" id="bank-balance">৳ 0</div>
+                </div>
+            </div>
+            
+            <div class="recent-activities">
+                <h3>সাম্প্রতিক কার্যক্রম</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>বিবরণ</th>
+                            <th>পরিমাণ</th>
+                            <th>পদ্ধতি</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-activities-table">
+                        <!-- সাম্প্রতিক কার্যক্রম এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- শ্রমিক ব্যবস্থাপনা ট্যাব -->
+        <div id="workers" class="tab-content">
+            <h2>শ্রমিক ব্যবস্থাপনা</h2>
+            
+            <div class="form-section">
+                <h3>নতুন শ্রমিক যোগ করুন</h3>
+                <form id="worker-form">
+                    <div class="form-group">
+                        <label for="worker-id">শ্রমিক আইডি</label>
+                        <input type="text" id="worker-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="worker-name">শ্রমিকের নাম</label>
+                        <input type="text" id="worker-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="worker-category">শ্রমিকের শ্রেণী</label>
+                        <select id="worker-category" required>
+                            <option value="">শ্রেণী নির্বাচন করুন</option>
+                            <option value="লেবার">লেবার</option>
+                            <option value="ললিকাটা">ললিকাটা</option>
+                            <option value="চুলা হেলপার">চুলা হেলপার</option>
+                            <option value="ডেলিভারি ম্যান">ডেলিভারি ম্যান</option>
+                            <option value="কম্পিউটার অপারেটর">কম্পিউটার অপারেটর</option>
+                            <option value="ম্যানেজিং ডাইরেক্টর">ম্যানেজিং ডাইরেক্টর</option>
+                            <option value="অফিস সহকারী">অফিস সহকারী</option>
+                            <option value="পিয়ন">পিয়ন</option>
+                            <option value="গার্ড">গার্ড</option>
+                            <option value="নাইট গার্ড">নাইট গার্ড</option>
+                            <option value="রিপিটার">রিপিটার</option>
+                            <option value="চুলা মিস্তিরি">চুলা মিস্তিরি</option>
+                            <option value="বাঁধা মহিলা">বাঁধা মহিলা</option>
+                            <option value="ঘষা মহিলা">ঘষা মহিলা</option>
+                            <option value="অন্যান্য">অন্যান্য</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="worker-address">ঠিকানা</label>
+                        <textarea id="worker-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="worker-phone">ফোন নম্বর</label>
+                        <input type="text" id="worker-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-type">বেতনের ধরন</label>
+                        <select id="salary-type" required>
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="সাপ্তাহিক">সাপ্তাহিক (হাজিরা ভিত্তিক)</option>
+                            <option value="প্রডাকশন ভিত্তিক">প্রডাকশন ভিত্তিক (পণ্য সংখ্যা ভিত্তিক)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-amount">বেতনের হার</label>
+                        <input type="number" id="salary-amount" placeholder="সাপ্তাহিক বেতন বা প্রতি পণ্যের হার">
+                        <div class="salary-rate-info" id="salary-rate-info">বেতনের হার সাপ্তাহিক বা প্রতি পণ্য ভিত্তিক হবে</div>
+                    </div>
+                    <button type="submit" class="btn-success">শ্রমিক যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- শ্রমিক সম্পাদনা ফর্ম -->
+            <div class="edit-worker-form" id="edit-worker-form">
+                <h3>শ্রমিক সম্পাদনা করুন</h3>
+                <form id="edit-worker-form-data">
+                    <input type="hidden" id="edit-worker-id">
+                    <div class="form-group">
+                        <label for="edit-worker-name">শ্রমিকের নাম</label>
+                        <input type="text" id="edit-worker-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-worker-category">শ্রমিকের শ্রেণী</label>
+                        <select id="edit-worker-category" required>
+                            <option value="">শ্রেণী নির্বাচন করুন</option>
+                            <option value="লেবার">লেবার</option>
+                            <option value="ললিকাটা">ললিকাটা</option>
+                            <option value="চুলা হেলপার">চুলা হেলপার</option>
+                            <option value="ডেলিভারি ম্যান">ডেলিভারি ম্যান</option>
+                            <option value="কম্পিউটার অপারেটর">কম্পিউটার অপারেটর</option>
+                            <option value="ম্যানেজিং ডাইরেক্টর">ম্যানেজিং ডাইরেক্টর</option>
+                            <option value="অফিস সহকারী">অফিস সহকারী</option>
+                            <option value="পিয়ন">পিয়ন</option>
+                            <option value="গার্ড">গার্ড</option>
+                            <option value="নাইট গার্ড">নাইট গার্ড</option>
+                            <option value="রিপিটার">রিপিটার</option>
+                            <option value="চুলা মিস্তিরি">চুলা মিস্তিরি</option>
+                            <option value="বাঁধা মহিলা">বাঁধা মহিলা</option>
+                            <option value="ঘষা মহিলা">ঘষা মহিলা</option>
+                            <option value="অন্যান্য">অন্যান্য</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-worker-address">ঠিকানা</label>
+                        <textarea id="edit-worker-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-worker-phone">ফোন নম্বর</label>
+                        <input type="text" id="edit-worker-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-salary-type">বেতনের ধরন</label>
+                        <select id="edit-salary-type" required>
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="সাপ্তাহিক">সাপ্তাহিক (হাজিরা ভিত্তিক)</option>
+                            <option value="প্রডাকশন ভিত্তিক">প্রডাকশন ভিত্তিক (পণ্য সংখ্যা ভিত্তিক)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-salary-amount">বেতনের হার</label>
+                        <input type="number" id="edit-salary-amount" placeholder="সাপ্তাহিক বেতন বা প্রতি পণ্যের হার">
+                        <div class="salary-rate-info" id="edit-salary-rate-info">বেতনের হার সাপ্তাহিক বা প্রতি পণ্য ভিত্তিক হবে</div>
+                    </div>
+                    <button type="submit" class="btn-success">আপডেট করুন</button>
+                    <button type="button" class="btn-warning" onclick="cancelEditWorker()">বাতিল করুন</button>
+                </form>
+            </div>
+            
+            <div class="workers-list">
+                <h3>শ্রমিক তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>আইডি</th>
+                            <th>নাম</th>
+                            <th>শ্রেণী</th>
+                            <th>ফোন</th>
+                            <th>বেতনের ধরন</th>
+                            <th>বেতনের হার</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workers-table">
+                        <!-- শ্রমিক তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- হাজিরা ট্যাব -->
+        <div id="attendance" class="tab-content">
+            <h2>হাজিরা ব্যবস্থাপনা</h2>
+            
+            <div class="form-section">
+                <h3>দ্রুত হাজিরা এন্ট্রি</h3>
+                <div class="quick-attendance">
+                    <div class="form-group">
+                        <label for="quick-attendance-date">তারিখ</label>
+                        <input type="date" id="quick-attendance-date" required>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>শ্রমিক আইডি</th>
+                                <th>নাম</th>
+                                <th>শ্রেণী</th>
+                                <th>হাজিরা অবস্থা</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quick-attendance-table">
+                            <!-- দ্রুত হাজিরা তালিকা এখানে দেখানো হবে -->
+                        </tbody>
+                    </table>
+                    
+                    <button class="btn-success" onclick="saveQuickAttendance()">হাজিরা সেভ করুন</button>
+                </div>
+            </div>
+            
+            <div class="attendance-list">
+                <h3>হাজিরা তালিকা</h3>
+                <div class="form-group">
+                    <label for="filter-date">তারিখ দ্বারা ফিল্টার করুন</label>
+                    <input type="date" id="filter-date">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>শ্রমিক আইডি</th>
+                            <th>নাম</th>
+                            <th>শ্রেণী</th>
+                            <th>হাজিরা</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-table">
+                        <!-- হাজিরা তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- বেতন ব্যবস্থাপনা ট্যাব -->
+        <div id="salary" class="tab-content">
+            <h2>বেতন ব্যবস্থাপনা</h2>
+            
+            <div class="form-section">
+                <h3>বেতন গণনা</h3>
+                <form id="salary-form">
+                    <div class="form-group">
+                        <label for="salary-period">সময়কাল নির্বাচন করুন</label>
+                        <select id="salary-period" required>
+                            <option value="week">সাপ্তাহিক</option>
+                            <option value="month">মাসিক</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-start-date">শুরু তারিখ</label>
+                        <input type="date" id="salary-start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-end-date">শেষ তারিখ</label>
+                        <input type="date" id="salary-end-date" required>
+                    </div>
+                    <button type="submit" class="btn-success">বেতন গণনা করুন</button>
+                </form>
+            </div>
+            
+            <div class="salary-list">
+                <h3>বেতন তালিকা</h3>
+                <div class="action-buttons">
+                    <button class="print-btn no-print" onclick="printIndividualSalarySheets()">পৃথক বেতন সিট প্রিন্ট</button>
+                    <button class="print-btn no-print" onclick="printCombinedSalarySheet()">যৌথ বেতন সিট প্রিন্ট</button>
+                    <button class="print-btn no-print" onclick="printPaymentReceipts()">পরিশোধ রসিদ প্রিন্ট</button>
+                </div>
+                
+                <div id="salary-sheet">
+                    <!-- বেতন সিট এখানে দেখানো হবে -->
+                </div>
+
+                <!-- অগ্রীম বেতন ফর্ম -->
+                <div class="bank-payment-form">
+                    <h3>অগ্রীম বেতন গ্রহণ</h3>
+                    <form id="advance-salary-form">
+                        <div class="form-group">
+                            <label for="advance-worker-id">শ্রমিক নির্বাচন করুন</label>
+                            <select id="advance-worker-id" required>
+                                <option value="">শ্রমিক নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="advance-amount">অগ্রীম বেতনের পরিমাণ (৳)</label>
+                            <input type="number" id="advance-amount" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="advance-date">তারিখ</label>
+                            <input type="date" id="advance-date" required>
+                        </div>
+                        <button type="submit" class="btn-warning">অগ্রীম বেতন গ্রহণ করুন</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- সাপ্লায়ার ট্যাব -->
+        <div id="suppliers" class="tab-content">
+            <h2>সাপ্লায়ার ব্যবস্থাপনা</h2>
+            
+            <!-- ব্যাংক মাধ্যমে সাপ্লায়ার পেমেন্ট -->
+            <div class="bank-payment-form">
+                <h3>সাপ্লায়ারকে ব্যাংক মাধ্যমে পেমেন্ট</h3>
+                <form id="supplier-bank-payment-form">
+                    <div class="form-group">
+                        <label for="supplier-payment-supplier">সাপ্লায়ার নির্বাচন করুন</label>
+                        <select id="supplier-payment-supplier" required>
+                            <option value="">সাপ্লায়ার নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-payment-amount">পরিমাণ (৳)</label>
+                        <input type="number" id="supplier-payment-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-payment-bank">ব্যাংক নির্বাচন করুন</label>
+                        <select id="supplier-payment-bank" required>
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-payment-date">তারিখ</label>
+                        <input type="date" id="supplier-payment-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-payment-description">বিবরণ</label>
+                        <textarea id="supplier-payment-description" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-success">পেমেন্ট করুন</button>
+                </form>
+            </div>
+            
+            <div class="form-section">
+                <h3>নতুন সাপ্লায়ার যোগ করুন</h3>
+                <form id="supplier-form">
+                    <div class="form-group">
+                        <label for="supplier-id">সাপ্লায়ার আইডি</label>
+                        <input type="text" id="supplier-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-name">সাপ্লায়ারের নাম</label>
+                        <input type="text" id="supplier-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-address">ঠিকানা</label>
+                        <textarea id="supplier-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-phone">ফোন নম্বর</label>
+                        <input type="text" id="supplier-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-materials">সরবরাহকৃত সামগ্রী</label>
+                        <select id="supplier-materials" multiple>
+                            <option value="এলুমিনিয়াম">এলুমিনিয়াম</option>
+                            <option value="স্টিল">স্টিল</option>
+                            <option value="তামা">তামা</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success">সাপ্লায়ার যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- সাপ্লায়ার সম্পাদনা ফর্ম -->
+            <div class="edit-worker-form" id="edit-supplier-form">
+                <h3>সাপ্লায়ার সম্পাদনা করুন</h3>
+                <form id="edit-supplier-form-data">
+                    <input type="hidden" id="edit-supplier-id">
+                    <div class="form-group">
+                        <label for="edit-supplier-name">সাপ্লায়ারের নাম</label>
+                        <input type="text" id="edit-supplier-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-supplier-address">ঠিকানা</label>
+                        <textarea id="edit-supplier-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-supplier-phone">ফোন নম্বর</label>
+                        <input type="text" id="edit-supplier-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-supplier-materials">সরবরাহকৃত সামগ্রী</label>
+                        <select id="edit-supplier-materials" multiple>
+                            <option value="এলুমিনিয়াম">এলুমিনিয়াম</option>
+                            <option value="স্টিল">স্টিল</option>
+                            <option value="তামা">তামা</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success">আপডেট করুন</button>
+                    <button type="button" class="btn-warning" onclick="cancelEditSupplier()">বাতিল করুন</button>
+                </form>
+            </div>
+            
+            <div class="suppliers-list">
+                <h3>সাপ্লায়ার তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>আইডি</th>
+                            <th>নাম</th>
+                            <th>ঠিকানা</th>
+                            <th>ফোন</th>
+                            <th>সামগ্রী</th>
+                            <th>মোট প্রদান</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliers-table">
+                        <!-- সাপ্লায়ার তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- কাচামাল স্টক ট্যাব -->
+        <div id="raw-materials" class="tab-content">
+            <h2>কাচামাল স্টক ব্যবস্থাপনা</h2>
+            
+            <!-- উন্নত স্টক ব্যবস্থাপনা সেকশন -->
+            <div class="stock-management">
+                <h3>স্টক ব্যবস্থাপনা</h3>
+                
+                <div class="stock-actions">
+                    <button class="btn-success" onclick="showStockDetails()">স্টক বিবরণ দেখুন</button>
+                    <button class="btn-warning" onclick="showStockAdjustmentForm()">স্টক সমন্বয়</button>
+                    <button class="print-btn no-print" onclick="printStockReport()">স্টক রিপোর্ট প্রিন্ট করুন</button>
+                </div>
+                
+                <!-- স্টক বিবরণ -->
+                <div class="stock-details" id="stock-details" style="display: none;">
+                    <h4>কাচামাল স্টক বিবরণ</h4>
+                    <div class="stock-details-grid">
+                        <div class="stock-detail-item">
+                            <span class="stock-detail-label">এলুমিনিয়াম:</span>
+                            <span class="stock-detail-value" id="detail-aluminum">0 কেজি</span>
+                        </div>
+                        <div class="stock-detail-item">
+                            <span class="stock-detail-label">স্টিল:</span>
+                            <span class="stock-detail-value" id="detail-steel">0 কেজি</span>
+                        </div>
+                        <div class="stock-detail-item">
+                            <span class="stock-detail-label">তামা:</span>
+                            <span class="stock-detail-value" id="detail-copper">0 কেজি</span>
+                        </div>
+                        <div class="stock-detail-item">
+                            <span class="stock-detail-label">মোট স্টক:</span>
+                            <span class="stock-detail-value" id="detail-total">0 কেজি</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- স্টক সমন্বয় ফর্ম -->
+                <div class="stock-details" id="stock-adjustment-form" style="display: none;">
+                    <h4>স্টক সমন্বয়</h4>
+                    <form id="adjustment-form">
+                        <div class="form-group">
+                            <label for="adjustment-date">তারিখ</label>
+                            <input type="date" id="adjustment-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adjustment-material">কাচামালের ধরন</label>
+                            <select id="adjustment-material" required>
+                                <option value="এলুমিনিয়াম">এলুমিনিয়াম</option>
+                                <option value="স্টিল">স্টিল</option>
+                                <option value="তামা">তামা</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="adjustment-type">সমন্বয়ের ধরন</label>
+                            <select id="adjustment-type" required>
+                                <option value="যোগ">যোগ (স্টক বৃদ্ধি)</option>
+                                <option value="বিয়োগ">বিয়োগ (স্টক হ্রাস)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="adjustment-weight">ওজন (কেজি)</label>
+                            <input type="number" id="adjustment-weight" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="adjustment-reason">কারণ</label>
+                            <textarea id="adjustment-reason" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-success">স্টক সমন্বয় করুন</button>
+                        <button type="button" class="btn-warning" onclick="hideStockAdjustmentForm()">বাতিল করুন</button>
+                </form>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>কাচামাল ক্রয়</h3>
+                <form id="raw-material-form">
+                    <div class="form-group">
+                        <label for="material-date">তারিখ</label>
+                        <input type="date" id="material-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="material-supplier">সাপ্লায়ার নির্বাচন করুন</label>
+                        <select id="material-supplier" required>
+                            <option value="">সাপ্লায়ার নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="material-type">কাচামালের ধরন</label>
+                        <select id="material-type" required>
+                            <option value="এলুমিনিয়াম">এলুমিনিয়াম</option>
+                            <option value="স্টিল">স্টিল</option>
+                            <option value="তামা">তামা</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="material-weight">ওজন (কেজি)</label>
+                        <input type="number" id="material-weight" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="material-price">মূল্য (৳)</label>
+                        <input type="number" id="material-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>পেমেন্ট পদ্ধতি</label>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" id="material-cash" name="material-payment" value="cash" checked>
+                                <label for="material-cash">নগদ</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="material-bank" name="material-payment" value="bank">
+                                <label for="material-bank">ব্যাংক</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="material-due" name="material-payment" value="due">
+                                <label for="material-due">বাকি</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="material-bank-select" style="display: none;">
+                        <label for="material-bank-name">ব্যাংক নির্বাচন করুন</label>
+                        <select id="material-bank-name">
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success">কাচামাল যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- কাচামাল সম্পাদনা ফর্ম -->
+            <div class="edit-worker-form" id="edit-raw-material-form">
+                <h3>কাচামাল সম্পাদনা করুন</h3>
+                <form id="edit-raw-material-form-data">
+                    <input type="hidden" id="edit-raw-material-index">
+                    <div class="form-group">
+                        <label for="edit-material-date">তারিখ</label>
+                        <input type="date" id="edit-material-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-material-supplier">সাপ্লায়ার নির্বাচন করুন</label>
+                        <select id="edit-material-supplier" required>
+                            <option value="">সাপ্লায়ার নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-material-type">কাচামালের ধরন</label>
+                        <select id="edit-material-type" required>
+                            <option value="এলুমিনিয়াম">এলুমিনিয়াম</option>
+                            <option value="স্টিল">স্টিল</option>
+                            <option value="তামা">তামা</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-material-weight">ওজন (কেজি)</label>
+                        <input type="number" id="edit-material-weight" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-material-price">মূল্য (৳)</label>
+                        <input type="number" id="edit-material-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>পেমেন্ট পদ্ধতি</label>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" id="edit-material-cash" name="edit-material-payment" value="cash">
+                                <label for="edit-material-cash">নগদ</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="edit-material-bank" name="edit-material-payment" value="bank">
+                                <label for="edit-material-bank">ব্যাংক</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="edit-material-due" name="edit-material-payment" value="due">
+                                <label for="edit-material-due">বাকি</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="edit-material-bank-select" style="display: none;">
+                        <label for="edit-material-bank-name">ব্যাংক নির্বাচন করুন</label>
+                        <select id="edit-material-bank-name">
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success">আপডেট করুন</button>
+                    <button type="button" class="btn-warning" onclick="cancelEditRawMaterial()">বাতিল করুন</button>
+                </form>
+            </div>
+            
+            <!-- কাচামাল স্টক তাকিকা -->
+            <div class="stock-shelves">
+                <div class="shelf">
+                    <h4>এলুমিনিয়াম স্টক</h4>
+                    <div class="shelf-item">
+                        <span>মোট স্টক:</span>
+                        <span class="stock-level" id="aluminum-stock">0 কেজি</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>গড় ক্রয় মূল্য:</span>
+                        <span id="aluminum-avg-price">৳ 0</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>স্টক অবস্থা:</span>
+                        <span id="aluminum-status" class="high-stock">পর্যাপ্ত</span>
+                    </div>
+                </div>
+                
+                <div class="shelf">
+                    <h4>স্টিল স্টক</h4>
+                    <div class="shelf-item">
+                        <span>মোট স্টক:</span>
+                        <span class="stock-level" id="steel-stock">0 কেজি</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>গড় ক্রয় মূল্য:</span>
+                        <span id="steel-avg-price">৳ 0</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>স্টক অবস্থা:</span>
+                        <span id="steel-status" class="high-stock">পর্যাপ্ত</span>
+                    </div>
+                </div>
+                
+                <div class="shelf">
+                    <h4>তামা স্টক</h4>
+                    <div class="shelf-item">
+                        <span>মোট স্টক:</span>
+                        <span class="stock-level" id="copper-stock">0 কেজি</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>গড় ক্রয় মূল্য:</span>
+                        <span id="copper-avg-price">৳ 0</span>
+                    </div>
+                    <div class="shelf-item">
+                        <span>স্টক অবস্থা:</span>
+                        <span id="copper-status" class="high-stock">পর্যাপ্ত</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="materials-list">
+                <h3>কাচামাল ক্রয় তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>সাপ্লায়ার</th>
+                            <th>কাচামালের ধরন</th>
+                            <th>ওজন (কেজি)</th>
+                            <th>মূল্য (৳)</th>
+                            <th>পেমেন্ট</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="raw-materials-table">
+                        <!-- কাচামাল তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- স্টক সমন্বয় তালিকা -->
+            <div class="materials-list">
+                <h3>স্টক সমন্বয় তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>কাচামালের ধরন</th>
+                            <th>সমন্বয়ের ধরন</th>
+                            <th>ওজন (কেজি)</th>
+                            <th>কারণ</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stock-adjustments-table">
+                        <!-- স্টক সমন্বয় তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- উৎপাদন ব্যবস্থাপনা ট্যাব -->
+        <div id="production" class="tab-content">
+            <h2>উৎপাদন ব্যবস্থাপনা</h2>
+            
+            <div class="form-section">
+                <h3>দ্রুত উৎপাদন এন্ট্রি</h3>
+                <div class="quick-production">
+                    <div class="form-group">
+                        <label for="quick-production-date">তারিখ</label>
+                        <input type="date" id="quick-production-date" required>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>শ্রমিক আইডি</th>
+                                <th>নাম</th>
+                                <th>শ্রেণী</th>
+                                <th>পণ্য</th>
+                                <th>পণ্য সংখ্যা</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quick-production-table">
+                            <!-- দ্রুত উৎপাদন তালিকা এখানে দেখানো হবে -->
+                        </tbody>
+                    </table>
+                    
+                    <button class="btn-success" onclick="saveQuickProduction()">উৎপাদন সেভ করুন</button>
+                </div>
+            </div>
+            
+            <div class="production-list">
+                <h3>উৎপাদন তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>শ্রমিক</th>
+                            <th>পণ্য</th>
+                            <th>পণ্য সংখ্যা</th>
+                            <th>ব্যবহৃত কাচামাল (কেজি)</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="production-table">
+                        <!-- উৎপাদন তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- বান্ডিল ওজন এন্ট্রি -->
+            <div class="form-section">
+                <h3>বান্ডিল ওজন এন্ট্রি</h3>
+                <form id="bundle-weight-form">
+                    <div class="form-group">
+                        <label for="bundle-product">পণ্য নির্বাচন করুন</label>
+                        <select id="bundle-product" required>
+                            <option value="">পণ্য নির্বাচন করুন</option>
+                            <!-- পণ্য তালিকা এখানে দেখানো হবে -->
+                        </select>
+                    </div>
+                    <div id="bundle-list" class="bundle-list-container">
+                        <!-- বান্ডিল তালিকা এখানে দেখানো হবে -->
+                    </div>
+                    <button type="submit" class="btn-success">ওজন সংরক্ষণ করুন</button>
+                </form>
+            </div>
+            
+            <!-- পণ্য তালিকা -->
+            <div class="products-list">
+                <h3>পণ্য তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>আইডি</th>
+                            <th>নাম</th>
+                            <th>প্রতি বান্ডিলে পণ্য সংখ্যা</th>
+                            <th>মোট উৎপাদিত পণ্য</th>
+                            <th>বান্ডিল সংখ্যা</th>
+                            <th>স্টক (বান্ডিল)</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table">
+                        <!-- পণ্য তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- স্টক রিপোর্ট সেকশন -->
+            <div class="stock-report">
+                <h3>পণ্য স্টক রিপোর্ট</h3>
+                <button class="print-btn no-print" onclick="printProductStockReport()">স্টক রিপোর্ট প্রিন্ট করুন</button>
+                
+                <div class="stock-report-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>পণ্য আইডি</th>
+                                <th>পণ্যের নাম</th>
+                                <th>স্টক (বান্ডিল)</th>
+                                <th>স্টক (পিচ)</th>
+                                <th>গড় ওজন (কেজি)</th>
+                                <th>মোট ওজন (কেজি)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock-report-table">
+                            <!-- স্টক রিপোর্ট এখানে দেখানো হবে -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- পণ্য ব্যবস্থাপনা ট্যাব -->
+        <div id="products" class="tab-content">
+            <h2>পণ্য ব্যবস্থাপনা</h2>
+            
+            <div class="form-section">
+                <h3>নতুন পণ্য যোগ করুন</h3>
+                
+                <div class="auto-product-list">
+                    <h4>পণ্যের নামের জন্য পরামর্শ:</h4>
+                    <div id="product-suggestions">
+                        <!-- পণ্যের নামের পরামর্শ এখানে দেখানো হবে -->
+                    </div>
+                </div>
+                
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="product-id">পণ্য আইডি</label>
+                        <input type="text" id="product-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-name">পণ্যের নাম</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pieces-per-bundle">প্রতি বান্ডিলে পণ্য সংখ্যা</label>
+                        <input type="number" id="pieces-per-bundle" required min="1">
+                        <small>উদাহরণ: কড়াই-১ প্রতি বান্ডিলে 30 পিচ, কড়াই-১০ প্রতি বান্ডিলে 30 পিচ</small>
+                    </div>
+                    <button type="submit" class="btn-success">পণ্য যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- উৎপাদন এন্ট্রি -->
+            <div class="form-section">
+                <h3>উৎপাদন এন্ট্রি</h3>
+                <form id="production-entry-form">
+                    <div class="form-group">
+                        <label for="production-date">তারিখ</label>
+                        <input type="date" id="production-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="production-worker">শ্রমিক নির্বাচন করুন</label>
+                        <select id="production-worker" required>
+                            <option value="">শ্রমিক নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="production-product">পণ্য নির্বাচন করুন</label>
+                        <select id="production-product" required>
+                            <option value="">পণ্য নির্বাচন করুন</option>
+                            <!-- পণ্য তালিকা এখানে দেখানো হবে -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="production-quantity">উৎপাদিত পণ্য সংখ্যা</label>
+                        <input type="number" id="production-quantity" required min="1">
+                    </div>
+                    <button type="submit" class="btn-success">উৎপাদন যোগ করুন</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- ক্রেতা ব্যবস্থাপনা ট্যাব -->
+        <div id="customers" class="tab-content">
+            <h2>ক্রেতা ব্যবস্থাপনা</h2>
+            
+            <!-- ব্যাংক মাধ্যমে ক্রেতার জমা -->
+            <div class="bank-payment-form">
+                <h3>ক্রেতার কাছ থেকে ব্যাংক মাধ্যমে টাকা জমা</h3>
+                <form id="customer-bank-receipt-form">
+                    <div class="form-group">
+                        <label for="customer-receipt-customer">ক্রেতা নির্বাচন করুন</label>
+                        <select id="customer-receipt-customer" required>
+                            <option value="">ক্রেতা নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-receipt-amount">পরিমাণ (৳)</label>
+                        <input type="number" id="customer-receipt-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-receipt-bank">ব্যাংক নির্বাচন করুন</label>
+                        <select id="customer-receipt-bank" required>
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-receipt-date">তারিখ</label>
+                        <input type="date" id="customer-receipt-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-receipt-description">বিবরণ</label>
+                        <textarea id="customer-receipt-description" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-success">জমা গ্রহণ করুন</button>
+                </form>
+            </div>
+            
+            <div class="form-section">
+                <h3>নতুন ক্রেতা যোগ করুন</h3>
+                <form id="customer-form">
+                    <div class="form-group">
+                        <label for="customer-id">ক্রেতা আইডি</label>
+                        <input type="text" id="customer-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-name">ক্রেতার নাম</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">ঠিকানা</label>
+                        <textarea id="customer-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">ফোন নম্বর</label>
+                        <input type="text" id="customer-phone">
+                    </div>
+                    <button type="submit" class="btn-success">ক্রেতা যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- ক্রেতা সম্পাদনা ফর্ম -->
+            <div class="edit-worker-form" id="edit-customer-form">
+                <h3>ক্রেতা সম্পাদনা করুন</h3>
+                <form id="edit-customer-form-data">
+                    <input type="hidden" id="edit-customer-id">
+                    <div class="form-group">
+                        <label for="edit-customer-name">ক্রেতার নাম</label>
+                        <input type="text" id="edit-customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-customer-address">ঠিকানা</label>
+                        <textarea id="edit-customer-address" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-customer-phone">ফোন নম্বর</label>
+                        <input type="text" id="edit-customer-phone">
+                    </div>
+                    <button type="submit" class="btn-success">আপডেট করুন</button>
+                    <button type="button" class="btn-warning" onclick="cancelEditCustomer()">বাতিল করুন</button>
+                </form>
+            </div>
+            
+            <div class="customers-list">
+                <h3>ক্রেতা তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>আইডি</th>
+                            <th>নাম</th>
+                            <th>ঠিকানা</th>
+                            <th>ফোন</th>
+                            <th>মোট ক্রয়</th>
+                            <th>বকেয়া</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table">
+                        <!-- ক্রেতা তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- পণ্য বিক্রয় ট্যাব -->
+        <div id="sales" class="tab-content">
+            <h2>পণ্য বিক্রয়</h2>
+            
+            <div class="form-section">
+                <h3>নতুন বিক্রয় যোগ করুন</h3>
+                <div class="sale-form">
+                    <form id="sale-form">
+                        <div class="form-group">
+                            <label for="sale-date">তারিখ</label>
+                            <input type="date" id="sale-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-customer">ক্রেতা নির্বাচন করুন</label>
+                            <select id="sale-customer" required>
+                                <option value="">ক্রেতা নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-product">পণ্য নির্বাচন করুন</label>
+                            <select id="sale-product" required>
+                                <option value="">পণ্য নির্বাচন করুন</option>
+                                <!-- পণ্য তালিকা এখানে দেখানো হবে -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-quantity">পরিমাণ (বান্ডিল)</label>
+                            <input type="number" id="sale-quantity" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-price">মূল্য (৳/বান্ডিল)</label>
+                            <input type="number" id="sale-price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-total">মোট মূল্য (৳)</label>
+                            <input type="number" id="sale-total" step="0.01" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>পেমেন্ট পদ্ধতি</label>
+                            <div class="payment-methods">
+                                <div class="payment-method">
+                                    <input type="radio" id="sale-cash" name="sale-payment" value="cash" checked>
+                                    <label for="sale-cash">নগদ</label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="sale-bank" name="sale-payment" value="bank">
+                                    <label for="sale-bank">ব্যাংক</label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="sale-due" name="sale-payment" value="due">
+                                    <label for="sale-due">বাকি</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="sale-bank-select" style="display: none;">
+                            <label for="sale-bank-name">ব্যাংক নির্বাচন করুন</label>
+                            <select id="sale-bank-name">
+                                <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-success">বিক্রয় যোগ করুন</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="sales-list">
+                <h3>বিক্রয় তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>ক্রেতা</th>
+                            <th>পণ্য</th>
+                            <th>পরিমাণ (বান্ডিল)</th>
+                            <th>মূল্য (৳)</th>
+                            <th>পেমেন্ট</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-table">
+                        <!-- বিক্রয় তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- ব্যাংক ব্যবস্থাপনা ট্যাব -->
+        <div id="bank-management" class="tab-content">
+            <h2>ব্যাংক ব্যবস্থাপনা</h2>
+            
+            <div class="bank-cards">
+                <div class="bank-card">
+                    <h4 id="sonali-bank-name">সোনালী ব্যাংক</h4>
+                    <div class="bank-name-edit">
+                        <input type="text" id="sonali-bank-edit" value="সোনালী ব্যাংক">
+                        <button class="btn-warning" onclick="updateBankName('sonali')">নাম পরিবর্তন</button>
+                    </div>
+                    <div class="bank-balance" id="sonali-balance">৳ 0</div>
+                </div>
+                <div class="bank-card">
+                    <h4 id="janata-bank-name">জনতা ব্যাংক</h4>
+                    <div class="bank-name-edit">
+                        <input type="text" id="janata-bank-edit" value="জনতা ব্যাংক">
+                        <button class="btn-warning" onclick="updateBankName('janata')">নাম পরিবর্তন</button>
+                    </div>
+                    <div class="bank-balance" id="janata-balance">৳ 0</div>
+                </div>
+                <div class="bank-card">
+                    <h4 id="rupali-bank-name">রূপালী ব্যাংক</h4>
+                    <div class="bank-name-edit">
+                        <input type="text" id="rupali-bank-edit" value="রূপালী ব্যাংক">
+                        <button class="btn-warning" onclick="updateBankName('rupali')">নাম পরিবর্তন</button>
+                    </div>
+                    <div class="bank-balance" id="rupali-balance">৳ 0</div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>ব্যাংক লেনদেন</h3>
+                <form id="bank-transaction-form">
+                    <div class="form-group">
+                        <label for="bank-transaction-date">তারিখ</label>
+                        <input type="date" id="bank-transaction-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-name">ব্যাংক নির্বাচন করুন</label>
+                        <select id="bank-name" required>
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-transaction-type">লেনদেনের ধরন</label>
+                        <select id="bank-transaction-type" required>
+                            <option value="জমা">জমা</option>
+                            <option value="উত্তোলন">উত্তোলন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-amount">পরিমাণ (৳)</label>
+                        <input type="number" id="bank-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-description">বিবরণ</label>
+                        <textarea id="bank-description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-success">লেনদেন যোগ করুন</button>
+                </form>
+            </div>
+            
+            <!-- ব্যাংক স্টেটমেন্ট সেকশন -->
+            <div class="bank-statement-section">
+                <h3>ব্যাংক স্টেটমেন্ট</h3>
+                
+                <div class="bank-statement-filters">
+                    <div class="form-group">
+                        <label for="statement-bank">ব্যাংক নির্বাচন করুন</label>
+                        <select id="statement-bank">
+                            <option value="all">সকল ব্যাংক</option>
+                            <!-- ব্যাংকের নাম ডাইনামিকভাবে যোগ করা হবে -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statement-start-date">শুরু তারিখ</label>
+                        <input type="date" id="statement-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="statement-end-date">শেষ তারিখ</label>
+                        <input type="date" id="statement-end-date">
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class="btn-success" onclick="generateBankStatement()">স্টেটমেন্ট দেখুন</button>
+                        <button class="btn-warning no-print" onclick="printBankStatement()">স্টেটমেন্ট প্রিন্ট করুন</button>
+                    </div>
+                </div>
+                
+                <div class="bank-statement-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>তারিখ</th>
+                                <th>ব্যাংক</th>
+                                <th>ধরন</th>
+                                <th>বিবরণ</th>
+                                <th>জমা (৳)</th>
+                                <th>উত্তোলন (৳)</th>
+                                <th>ব্যালেন্স (৳)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bank-statement-table">
+                            <!-- ব্যাংক স্টেটমেন্ট এখানে দেখানো হবে -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="bank-transactions-list">
+                <h3>ব্যাংক লেনদেন তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>ব্যাংক</th>
+                            <th>ধরন</th>
+                            <th>বিবরণ</th>
+                            <th>পরিমাণ</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bank-transactions-table">
+                        <!-- ব্যাংক লেনদেন তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- লেনদেন ট্যাব -->
+        <div id="transactions" class="tab-content">
+            <h2>লেনদেন ব্যবস্থাপনা</h2>
+            
+            <!-- নগদ ব্যালেন্স কার্ড -->
+            <div class="cash-balance-card">
+                <h3>নগদ ব্যালেন্স</h3>
+                <div class="cash-balance-value" id="transaction-cash-balance">৳ 0</div>
+            </div>
+            
+            <div class="form-section">
+                <h3>নতুন লেনদেন যোগ করুন</h3>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="transaction-date">তারিখ</label>
+                        <input type="date" id="transaction-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-type">লেনদেনের ধরন</label>
+                        <select id="transaction-type" required>
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="বেতন">বেতন</option>
+                            <option value="নগদ জমা">নগদ জমা</option>
+                            <option value="নগদ উত্তোলন">নগদ উত্তোলন</option>
+                            <option value="সাপ্লায়ার পেমেন্ট">সাপ্লায়ার পেমেন্ট</option>
+                            <option value="ক্রেতা পেমেন্ট">ক্রেতা পেমেন্ট</option>
+                            <option value="অন্যান্য">অন্যান্য</option>
+                        </select>
+                    </div>
+                    
+                    <!-- সাপ্লায়ার/ক্রেতা নির্বাচন ফিল্ড -->
+                    <div class="transaction-extra-fields" id="supplier-field">
+                        <div class="form-group">
+                            <label for="transaction-supplier">সাপ্লায়ার নির্বাচন করুন</label>
+                            <select id="transaction-supplier">
+                                <option value="">সাপ্লায়ার নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="transaction-extra-fields" id="customer-field">
+                        <div class="form-group">
+                            <label for="transaction-customer">ক্রেতা নির্বাচন করুন</label>
+                            <select id="transaction-customer">
+                                <option value="">ক্রেতা নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transaction-amount">পরিমাণ (৳)</label>
+                        <input type="number" id="transaction-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-description">বিবরণ</label>
+                        <textarea id="transaction-description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-success">লেনদেন যোগ করুন</button>
+                </form>
+            </div>
+            
+            <div class="transactions-list">
+                <h3>লেনদেন তালিকা</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>ধরন</th>
+                            <th>বিবরণ</th>
+                            <th>পরিমাণ</th>
+                            <th>কার্যক্রম</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-table">
+                        <!-- লেনদেন তালিকা এখানে দেখানো হবে -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- রিপোর্ট ট্যাব -->
+        <div id="reports" class="tab-content">
+            <h2>রিপোর্ট ও স্টেটমেন্ট</h2>
+            
+            <div class="report-options">
+                <div class="form-group">
+                    <label for="report-type">রিপোর্টের ধরন</label>
+                    <select id="report-type">
+                        <option value="sales">বিক্রয় রিপোর্ট</option>
+                        <option value="salary">বেতন রিপোর্ট</option>
+                        <option value="attendance">হাজিরা রিপোর্ট</option>
+                        <option value="inventory">স্টক রিপোর্ট</option>
+                        <option value="transactions">লেনদেন রিপোর্ট</option>
+                        <option value="raw-materials">কাচামাল রিপোর্ট</option>
+                        <option value="production">উৎপাদন রিপোর্ট</option>
+                        <option value="cash-flow">নগদ প্রবাহ রিপোর্ট</option>
+                        <option value="bank-statement">ব্যাংক স্টেটমেন্ট</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="report-period">সময়কাল</label>
+                    <select id="report-period">
+                        <option value="today">আজ</option>
+                        <option value="week">এই সপ্তাহ</option>
+                        <option value="month">এই মাস</option>
+                        <option value="quarter">এই ত্রৈমাসিক</option>
+                        <option value="year">এই বছর</option>
+                        <option value="custom">কাস্টম</option>
+                    </select>
+                </div>
+                <div class="form-group" id="custom-date-range" style="display: none;">
+                    <label for="start-date">শুরু তারিখ</label>
+                    <input type="date" id="start-date">
+                    <label for="end-date">শেষ তারিখ</label>
+                    <input type="date" id="end-date">
+                </div>
+                <button class="btn-success" onclick="generateReport()">রিপোর্ট তৈরি করুন</button>
+                <button class="btn-warning no-print" onclick="printReport()">রিপোর্ট প্রিন্ট করুন</button>
+            </div>
+            
+            <div id="report-output">
+                <!-- রিপোর্ট এখানে দেখানো হবে -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
